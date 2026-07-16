@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Planos design tokens ──────────────────────────────────────────────
+     Blueprint-blue palette drawn from the brand slide + logo:
+     paper (near-white sheet), frost (light blue), azure (primary CTA blue),
+     steel (logo hexagon blue), ink (deep drafting navy). */
+  --color-paper: #f4f7fb;
+  --color-paper-2: #e7edf6;
+  --color-frost: #c6d5ea;
+  --color-frost-2: #8fa6c8;
+  --color-ink: #0a1c38;
+  --color-ink-2: #102547;
+  --color-ink-3: #1d3560;
+  --color-azure: #3865b3;
+  --color-azure-deep: #29497f;
+  --color-azure-soft: #93c7fd;
+  --color-steel: #5774ad;
+  --color-steel-deep: #3f568a;
+  --color-steel-soft: #a9c3e8;
+  --color-muted: #45536e;
+  --color-muted-dark: #93a5c4;
+
+  /* Blueprint linework (on dark sections) */
+  --color-line-faint: rgba(230, 240, 252, 0.07);
+  --color-line: rgba(230, 240, 252, 0.16);
+  --color-line-strong: rgba(230, 240, 252, 0.45);
+
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-archivo);
+  --font-mono: var(--font-plex-mono);
+
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --text-display-xl: clamp(2.75rem, 6.5vw, 5.5rem);
+  --text-display-lg: clamp(2.25rem, 4.5vw, 3.75rem);
+  --text-display-md: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+::selection {
+  background: var(--color-azure);
+  color: var(--color-paper);
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-azure);
+  outline-offset: 3px;
+}
+
+/* ── Blueprint drafting grids ─────────────────────────────────────────── */
+.blueprint-grid-dark {
+  background-image:
+    linear-gradient(var(--color-line-faint) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-line-faint) 1px, transparent 1px),
+    linear-gradient(rgba(230, 240, 252, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(230, 240, 252, 0.035) 1px, transparent 1px);
+  background-size:
+    96px 96px,
+    96px 96px,
+    24px 24px,
+    24px 24px;
+}
+
+.blueprint-grid-light {
+  background-image:
+    linear-gradient(rgba(10, 28, 56, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 28, 56, 0.055) 1px, transparent 1px);
+  background-size:
+    96px 96px,
+    96px 96px;
+}
+
+/* Mono annotation label, echoing drafting-sheet callouts */
+.anno {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Dashed line crawl for the "slow manual redraw" arrow */
+@keyframes dash-crawl {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+.dash-crawl {
+  animation: dash-crawl 1.6s linear infinite;
+}
+
+/* Drafting-stamp marquee: two identical runs, shifted by one run's width */
+@keyframes marquee {
+  to {
+    transform: translateX(-100%);
+  }
+}
+.marquee > * {
+  animation: marquee 28s linear infinite;
+}
+.marquee:hover > * {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dash-crawl,
+  .marquee > * {
+    animation: none;
+  }
+}
